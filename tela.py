@@ -4,6 +4,7 @@ from tkinter import messagebox, ttk
 from filas import ErroFila, GerenciadorFilas
 
 
+# Paletas de cores para alternar entre modo escuro e modo claro na interface
 TEMAS = {
     "escuro": {
         "bg": "#0f172a",
@@ -44,6 +45,7 @@ TEMAS = {
 }
 
 
+# Janela principal da interface gráfica para emissão e chamada de senhas
 class TelaClinica:
     def __init__(self, root, gerenciador=None):
         self.root = root
@@ -51,6 +53,7 @@ class TelaClinica:
         self.root.geometry("820x520")
         self.root.minsize(720, 460)
 
+        # Reaproveita um gerenciador externo ou cria um novo se não for informado
         self.gerenciador = gerenciador if gerenciador is not None else GerenciadorFilas()
         self.tema_atual = "escuro"
 
@@ -64,6 +67,7 @@ class TelaClinica:
         self._aplicar_tema("escuro")
         self._atualizar_tudo()
 
+    # Aplica o tema "clam" do ttk para permitir personalização consistente dos widgets
     def _configurar_estilos(self):
         self.style = ttk.Style(self.root)
         try:
@@ -71,6 +75,7 @@ class TelaClinica:
         except tk.TclError:
             pass
 
+    # Constrói toda a estrutura visual da tela (cabeçalho, ações, chamada e fila)
     def _montar_interface(self, especialidades):
         self.root_bg = tk.Frame(self.root)
         self.root_bg.pack(fill=tk.BOTH, expand=True)
@@ -78,7 +83,7 @@ class TelaClinica:
         container = tk.Frame(self.root_bg)
         container.pack(fill=tk.BOTH, expand=True, padx=18, pady=16)
 
-        # Topo simples: título à esquerda, seletor de tema à direita
+        # Cabeçalho com título à esquerda e seletor de tema à direita
         topo = tk.Frame(container)
         topo.pack(fill=tk.X, pady=(0, 14))
 
@@ -105,18 +110,20 @@ class TelaClinica:
         self.combo_tema.pack(side=tk.LEFT)
         self.combo_tema.bind("<<ComboboxSelected>>", self._ao_trocar_tema)
 
-        # Corpo em 2 colunas: Esquerda = ações | Direita = chamada + fila
+        # Área principal dividida em duas colunas: controles à esquerda e informações à direita
         corpo = tk.Frame(container)
         corpo.pack(fill=tk.BOTH, expand=True)
 
         coluna_esq = tk.Frame(corpo, width=265)
         coluna_esq.pack(side=tk.LEFT, fill=tk.Y, padx=(0, 14))
+
+        # Impede que os widgets internos redimensionem a largura fixa da coluna
         coluna_esq.pack_propagate(False)
 
         coluna_dir = tk.Frame(corpo)
         coluna_dir.pack(side=tk.LEFT, fill=tk.BOTH, expand=True)
 
-        # Coluna esquerda: seleção e ações principais
+        # Painel esquerdo: seleção de especialidade/categoria e botões de ação
         self.card_acoes = tk.Frame(coluna_esq, highlightthickness=1, padx=14, pady=14)
         self.card_acoes.pack(fill=tk.BOTH, expand=True)
 
@@ -190,7 +197,7 @@ class TelaClinica:
         )
         self.btn_historico.pack(fill=tk.X)
 
-        # Coluna direita superior: última chamada
+        # Bloco superior direito: exibe a última senha chamada no atendimento
         self.card_chamada = tk.Frame(coluna_dir, highlightthickness=1, padx=14, pady=12)
         self.card_chamada.pack(fill=tk.X, pady=(0, 12))
 
@@ -213,7 +220,7 @@ class TelaClinica:
         )
         self.lbl_ultima_info.pack(anchor=tk.W)
 
-        # Coluna direita inferior: fila de espera
+        # Bloco inferior direito: resumo e listagem das senhas aguardando na especialidade
         self.card_fila = tk.Frame(coluna_dir, highlightthickness=1, padx=14, pady=12)
         self.card_fila.pack(fill=tk.BOTH, expand=True)
 
@@ -239,11 +246,14 @@ class TelaClinica:
         self.listbox_fila.pack(side=tk.LEFT, fill=tk.BOTH, expand=True, padx=4, pady=4)
         self.scrollbar_fila.pack(side=tk.RIGHT, fill=tk.Y)
 
+    # Atualiza as cores da interface ao mudar a opção no seletor de tema
     def _ao_trocar_tema(self, _evento=None):
         modo = "claro" if self.var_tema.get() == "Modo Claro" else "escuro"
         self._aplicar_tema(modo)
+        # Reaplica as cores das linhas da lista conforme o tema ativo
         self._atualizar_lista_fila()
 
+    # Aplica todas as cores do tema escolhido nos componentes da janela
     def _aplicar_tema(self, modo):
         self.tema_atual = modo
         t = TEMAS[modo]
@@ -322,6 +332,7 @@ class TelaClinica:
             selectforeground=t["select_fg"],
         )
 
+    # Pinta recursivamente os frames de fundo, preservando os cartões com cor própria
     def _pintar_fundo(self, widget, cor):
         cards = {self.card_acoes, self.card_chamada, self.card_fila, self.listbox_fila.master}
         if isinstance(widget, tk.Frame) and widget not in cards:
@@ -329,6 +340,7 @@ class TelaClinica:
             for filho in widget.winfo_children():
                 self._pintar_fundo(filho, cor)
 
+    # Emite uma nova senha para a especialidade e categoria selecionadas
     def _ao_emitir_senha(self):
         esp = self.var_especialidade.get()
         cat = self.var_categoria.get()
@@ -349,6 +361,7 @@ class TelaClinica:
             f"Tempo estimado de espera: {espera_min} min",
         )
 
+    # Chama a próxima senha da especialidade atual e atualiza a tela
     def _ao_chamar_proxima(self):
         esp = self.var_especialidade.get()
 
@@ -361,6 +374,7 @@ class TelaClinica:
 
         self._atualizar_tudo()
 
+    # Atualiza o cartão de última chamada com os dados mais recentes
     def _atualizar_painel_chamada(self):
         ultima = self.gerenciador.ultima_chamada
         if ultima is None:
@@ -372,6 +386,7 @@ class TelaClinica:
                 text=f"{ultima.categoria}  ·  Emitida às {ultima.hora}"
             )
 
+    # Recarrega o resumo e a listagem das senhas em espera na especialidade selecionada
     def _atualizar_lista_fila(self):
         t = TEMAS[self.tema_atual]
         esp = self.var_especialidade.get()
@@ -398,6 +413,7 @@ class TelaClinica:
 
         minutos = self.gerenciador.MINUTOS_POR_PACIENTE
         for idx, item in enumerate(senhas):
+            # Estima a espera com base na posição da senha na ordem de atendimento
             espera = idx * minutos
             linha = (
                 f"  {idx + 1:>2}º  {item.codigo:<8}  {item.categoria:<12}  "
@@ -407,10 +423,12 @@ class TelaClinica:
             cor = t["pref_fg"] if item.categoria == "Preferencial" else t["norm_fg"]
             self.listbox_fila.itemconfig(idx, fg=cor)
 
+    # Sincroniza o painel de chamada e a lista da fila de uma só vez
     def _atualizar_tudo(self):
         self._atualizar_painel_chamada()
         self._atualizar_lista_fila()
 
+    # Abre uma janela secundária exibindo todas as senhas já chamadas
     def _abrir_historico(self):
         t = TEMAS[self.tema_atual]
 
@@ -482,7 +500,9 @@ class TelaClinica:
         ).pack(anchor=tk.E)
 
 
+# Permite rodar a tela isoladamente para testes rápidos
 if __name__ == "__main__":
     root = tk.Tk()
     app = TelaClinica(root)
     root.mainloop()
+
