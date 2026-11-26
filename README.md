@@ -1,6 +1,8 @@
 
 # 🏥 Sistema de Gerenciamento de Senhas – Clínica Médica
 
+![Demonstração do projeto](gif_projeto.gif)
+
 ## 📌 Sobre o Projeto
 
 O **Sistema de Gerenciamento de Senhas – Clínica Médica** é uma aplicação desenvolvida em Python com o objetivo de organizar e controlar o atendimento de pacientes em uma clínica médica.
