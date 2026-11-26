@@ -1,7 +1,12 @@
-
 # 🏥 Sistema de Gerenciamento de Senhas – Clínica Médica
 
 ![Demonstração do projeto](gif_projeto.gif)
+
+## 👥 Integrantes
+
+- Pedro Henrique Farias da Silva — Ciência da Computação
+- Eliezer Câmara Silva Filho — Engenharia de Software
+- Welinton Junior — Ciência da Computação
 
 ## 📌 Sobre o Projeto
 
@@ -154,49 +159,50 @@ Sistema-Gerenciamento-Senhas/
 ├── tela.py
 ├── README.md
 └── .gitignore
+
 ```
 
 ### Descrição dos arquivos
 
-- **filas.py:** contém a lógica de gerenciamento das filas de atendimento, incluindo emissão de senhas, controle de prioridade, cálculo do tempo de espera, chamada de pacientes e histórico de atendimentos.
-
-- **main.py:** responsável por iniciar a aplicação e executar o sistema.
-
-- **tela.py:** contém a implementação da interface gráfica, desenvolvida com Tkinter, permitindo a interação do usuário com o sistema.
-
-- **README.md:** documentação do projeto, apresentando seus objetivos, funcionalidades, tecnologias utilizadas e instruções de execução.
-
-- **.gitignore:** define os arquivos e diretórios que devem ser ignorados pelo Git, evitando o envio de arquivos temporários, ambientes virtuais e outros arquivos desnecessários ao repositório.
+* **filas.py:** contém a lógica de gerenciamento das filas de atendimento, incluindo emissão de senhas, controle de prioridade, cálculo do tempo de espera, chamada de pacientes e histórico de atendimentos.
+* **main.py:** responsável por iniciar a aplicação e executar o sistema.
+* **tela.py:** contém a implementação da interface gráfica, desenvolvida com Tkinter, permitindo a interação do usuário com o sistema.
+* **README.md:** documentação do projeto, apresentando seus objetivos, funcionalidades, tecnologias utilizadas e instruções de execução.
+* **.gitignore:** define os arquivos e diretórios que devem ser ignorados pelo Git, evitando o envio de arquivos temporários, ambientes virtuais e outros arquivos desnecessários ao repositório.
 
 ## ▶️ Como Executar o Projeto
 
 ### Pré-requisitos
 
-- Python 3 instalado.
-- Tkinter disponível na instalação do Python.
+* Python 3 instalado.
+* Tkinter disponível na instalação do Python.
 
 ### Passo 1 – Clonar o repositório
 
 ```bash
-git clone URL_DO_REPOSITORIO
+git clone [https://github.com/developerEliezer/sistema-senhas-clinica](https://github.com/developerEliezer/sistema-senhas-clinica)
+
 ```
 
 ### Passo 2 – Acessar a pasta do projeto
 
 ```bash
 cd Sistema-Gerenciamento-Senhas
+
 ```
 
 ### Passo 3 – Executar a aplicação
 
 ```bash
 python main.py
+
 ```
 
 No Windows, também é possível utilizar:
 
 ```bash
 py main.py
+
 ```
 
 ## 🧪 Testes
@@ -205,11 +211,11 @@ O código possui exemplos de testes para verificar o funcionamento do gerenciame
 
 Os testes verificam:
 
-- Emissão de senhas normais.
-- Emissão de senhas preferenciais.
-- Prioridade dos pacientes preferenciais.
-- Ordem de atendimento dentro das categorias.
-- Comportamento do sistema quando a fila está vazia.
+* Emissão de senhas normais.
+* Emissão de senhas preferenciais.
+* Prioridade dos pacientes preferenciais.
+* Ordem de atendimento dentro das categorias.
+* Comportamento do sistema quando a fila está vazia.
 
 ## 🚧 Status do Projeto
 
@@ -223,5 +229,7 @@ A interface gráfica possui sua estrutura inicial implementada e está em proces
 
 O projeto tem como finalidade aplicar conceitos de programação, estruturas de dados, orientação a objetos, tratamento de exceções e desenvolvimento de interfaces gráficas.
 
-A utilização de filas permite organizar os atendimentos de maneira estruturada, contribuindo para um fluxo de atendimento mais organizado e eficiente em uma clínica médica.
+* A utilização de filas permite organizar os atendimentos de maneira estruturada, contribuindo para um fluxo de atendimento mais organizado e eficiente em uma clínica médica.
+
+
 
